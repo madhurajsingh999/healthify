@@ -1,0 +1,15 @@
+server:
+  port: 9091
+spring:
+  application:
+    name: healthify-user
+  config:
+    import: "optional:configserver:http://localhost:8888"
+    label: default
+  cloud:
+    discovery:
+      enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true

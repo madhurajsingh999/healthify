@@ -1,0 +1,15 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: healthify-gateway
+  config:
+    import: "optional:configserver:http://localhost:8888"
+    label: default
+  cloud:
+    discovery:
+      enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true

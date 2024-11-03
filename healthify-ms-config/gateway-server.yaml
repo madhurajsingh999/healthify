@@ -1,0 +1,47 @@
+spring:
+  config:
+    import: "optional:configserver:http://localhost:8888"
+  cloud:
+    gateway:
+        discovery.locator:
+          enabled: true
+          lowerCaseServiceId: true
+        routes:
+        - id: auth-app
+          uri: lb://auth-app
+          predicates:
+          - Path=/auth/**
+          filters:
+          - PreserveHostHeader
+        - id: doc-app
+          uri: lb://doc-app
+          predicates:
+          - Path=/swagger/**
+          filters:
+          - RewritePath=/swagger/(?<path>.*), /$\{path}
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+          - Path=/uservice/**
+          filters:
+          - RewritePath=/uservice/(?<path>.*), /$\{path}
+          - PreserveHostHeader
+        - id: company-service
+          uri: lb://company-service
+          predicates:
+          - Path=/cmpservice/**
+          filters:
+          - RewritePath=/cmpservice/(?<path>.*), /$\{path}
+          - PreserveHostHeader
+        - id: challenge-service
+          uri: lb://challenge-service
+          predicates:
+          - Path=/chlservice/**
+          filters:
+          - RewritePath=/chlservice/(?<path>.*), /$\{path}
+        - id: campaign-service
+          uri: lb://campaign-service
+          predicates:
+          - Path=/camservice/**
+          filters:
+          - RewritePath=/camservice/(?<path>.*), /$\{path}

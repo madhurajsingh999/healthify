@@ -1,0 +1,19 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: healthify-config
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: file:/Users/aniltripathi/Desktop/Work/healthify/healthify-ms-config
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8061/eureka/
+---
+
