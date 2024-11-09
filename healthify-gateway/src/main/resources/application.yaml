@@ -34,3 +34,5 @@ springdoc:
         url: /reward/v3/api-docs
       - name: healthify-user
         url: /user/v3/api-docs
+      - name: healthify-notification
+        url: /notification/v3/api-docs

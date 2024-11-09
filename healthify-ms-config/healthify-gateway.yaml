@@ -36,9 +36,9 @@ spring:
           predicates:
           - Path=/user/**
           filters:
-        - id: campaign-service
-          uri: lb://campaign-service
+        - id: healthify-notification
+          uri: lb://healthify-notification
           predicates:
-          - Path=/camservice/**
+          - Path=/notification/**
           filters:
-          - RewritePath=/camservice/(?<path>.*), /$\{path}
+          - PreserveHostHeader
