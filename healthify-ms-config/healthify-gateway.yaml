@@ -7,8 +7,8 @@ spring:
           enabled: true
           lowerCaseServiceId: true
         routes:
-        - id: auth-app
-          uri: lb://auth-app
+        - id: healthify-auth
+          uri: lb://healthify-auth
           predicates:
           - Path=/auth/**
           filters:
@@ -19,26 +19,23 @@ spring:
           - Path=/swagger/**
           filters:
           - RewritePath=/swagger/(?<path>.*), /$\{path}
-        - id: user-service
-          uri: lb://user-service
+        - id: healthify-challenge
+          uri: lb://healthify-challenge
           predicates:
-          - Path=/uservice/**
+          - Path=/challenge/**
           filters:
-          - RewritePath=/uservice/(?<path>.*), /$\{path}
           - PreserveHostHeader
-        - id: company-service
-          uri: lb://company-service
+        - id: healthify-reward
+          uri: lb://healthify-reward
           predicates:
-          - Path=/cmpservice/**
+          - Path=/reward/**
           filters:
-          - RewritePath=/cmpservice/(?<path>.*), /$\{path}
           - PreserveHostHeader
-        - id: challenge-service
-          uri: lb://challenge-service
+        - id: healthify-user
+          uri: lb://healthify-user
           predicates:
-          - Path=/chlservice/**
+          - Path=/user/**
           filters:
-          - RewritePath=/chlservice/(?<path>.*), /$\{path}
         - id: campaign-service
           uri: lb://campaign-service
           predicates:
