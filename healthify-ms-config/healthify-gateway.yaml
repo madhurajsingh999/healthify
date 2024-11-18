@@ -1,3 +1,13 @@
+jwt:
+  secret: ${JWT_SECRET:R1BYcTVXVGNDU2JmWHVnZ1lnN0FKeGR3cU1RUU45QXV4SDJONFZ3ckhwS1N0ZjNCYVkzZ0F4RVBSS1UzRENwRw==}
+  expirationms: ${JWT_EXPIRATIONMS:86400000}
+
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    api.gateway: DEBUG
+
 spring:
   config:
     import: "optional:configserver:http://localhost:8888"

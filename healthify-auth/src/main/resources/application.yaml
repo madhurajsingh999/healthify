@@ -5,6 +5,20 @@ server:
 spring:
   application:
     name: healthify-auth
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:healthifydb}?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: true
+      connection-timeout: 20000
+      idle-timeout: 30000
+      max-lifetime: 120000
+      maximum-pool-size: 3
+      minimum-idle: 1
+      username: postgres
+      password: Wellness36@
+  liquibase:
+    change-log: "classpath:/db/changelog/db.changelog-master.xml"
   config:
     import: "optional:configserver:http://localhost:8888"
     label: default
@@ -15,3 +29,19 @@ spring:
 eureka:
   instance:
     prefer-ip-address: true
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+      exposure:
+        include: "*"
+        exclude:
+          - env
+
+jwt:
+  secret: ${JWT_SECRET:R1BYcTVXVGNDU2JmWHVnZ1lnN0FKeGR3cU1RUU45QXV4SDJONFZ3ckhwS1N0ZjNCYVkzZ0F4RVBSS1UzRENwRw==}
+  expirationms: ${JWT_EXPIRATIONMS:86400000}
