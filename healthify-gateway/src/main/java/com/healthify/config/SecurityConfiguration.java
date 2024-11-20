@@ -15,8 +15,6 @@ import org.springframework.security.web.server.authorization.HttpStatusServerAcc
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
 import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
 
-import reactor.core.publisher.Mono;
-
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 @Configuration

@@ -1,5 +1,7 @@
 package com.healthify.config;
 
+import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -12,7 +14,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-@Component
+import javax.crypto.spec.SecretKeySpec;
+
+//@Component
 public class JwtProvider {
 
 	private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
@@ -22,21 +26,28 @@ public class JwtProvider {
 
 	@Value("${jwt.expirationms}")
 	private int jwtExpiration;
-	private static final String AUTHORITIES_KEY = "auth";
+	private static final String AUTHORITIES_KEY = "role";
 
 	public String generateJwtToken(Authentication authentication) {
 
-		String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-				.collect(Collectors.joining(","));
+		String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+		Date cdate=new Date();
+		long now = cdate.getTime();
+		Date validity = new Date(now +jwtExpiration);
+		byte[] decodedKey = Base64.getDecoder().decode(jwtSecret);
+		Key key = new SecretKeySpec(decodedKey, SignatureAlgorithm.HS256.getJcaName());
 
-		return Jwts.builder().setSubject(authentication.getName()).claim(AUTHORITIES_KEY, authorities).setIssuedAt(new Date())
-				.setExpiration(new Date((new Date()).getTime() + jwtExpiration * 1000))
-				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+		return Jwts.builder().subject(authentication.getName())
+				.claim("role",authorities)
+				.issuedAt(cdate)
+				.expiration(validity)
+				.signWith(key).compact();
 	}
 
 	public boolean validateJwtToken(String authToken) {
 		try {
-			Jwts.parser().requireSubject(jwtSecret).build().parseSignedClaims(authToken).getPayload();
+			//Jwts.parser().requireSubject(jwtSecret).build().parseSignedClaims(authToken).getPayload();
+			Jwts.parser().requireSubject(jwtSecret).build().parse(authToken);
 			return true;
 		} catch (SignatureException e) {
 			logger.error("Invalid JWT signature -> Message: {0} ", e);

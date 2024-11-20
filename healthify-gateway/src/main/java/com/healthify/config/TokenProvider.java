@@ -1,11 +1,12 @@
 package com.healthify.config;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
+import java.security.Key;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,8 +24,9 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+
+import javax.crypto.spec.SecretKeySpec;
 
 @Component
 public class TokenProvider {
@@ -36,31 +38,14 @@ public class TokenProvider {
 	@Value("${jwt.expirationms}")
 	private long tokenValidityInMilliseconds;
 
-	private static final String AUTHORITIES_KEY = "auth";
+	private static final String AUTHORITIES_KEY = "role";
 
-	public String createToken(Authentication authentication) {
-		String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-				.collect(Collectors.joining(","));
-
-		Date cdate=new Date();
-		long now = cdate.getTime();
-		Date validity = new Date(now + this.tokenValidityInMilliseconds);
-
-		return Jwts.builder().setSubject(authentication.getName()).claim(AUTHORITIES_KEY, authorities)
-				.signWith(SignatureAlgorithm.HS512, secretKey).setIssuedAt(cdate).setExpiration(validity).compact();
-	}
-
-	private String createToken(Map<String, Object> claims, String subject) {
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-				.signWith(SignatureAlgorithm.HS256, secretKey).compact();
-	}
 
 	public Authentication getAuthentication(String token) {
 		if (StringUtils.isEmpty(token) || !validateToken(token)) {
 			throw new BadCredentialsException("Invalid token");
 		}
-		Claims claims = Jwts.parser().requireSubject(secretKey).build().parseSignedClaims(token).getPayload();
+		Claims claims = extractAllClaims(token);
 
 		Collection<? extends GrantedAuthority> authorities = Arrays
 				.stream(claims.get(AUTHORITIES_KEY).toString().split(",")).map(SimpleGrantedAuthority::new)
@@ -90,7 +75,8 @@ public class TokenProvider {
 
 	public boolean validateToken(String authToken) {
 		try {
-			Jwts.parser().requireSubject(secretKey).build().parseSignedClaims(authToken);
+			log.info("TOKE={}",authToken);
+			Jwts.parser().setSigningKey(getSignInKey()).build().parseClaimsJws(authToken);
 			return true;
 		} catch (SignatureException e) {
 			log.info("Invalid JWT signature.");
@@ -102,6 +88,7 @@ public class TokenProvider {
 			log.info("Expired JWT token.");
 			log.trace("Expired JWT token trace: {0}", e);
 		} catch (UnsupportedJwtException e) {
+			e.printStackTrace();
 			log.info("Unsupported JWT token.");
 			log.trace("Unsupported JWT token trace: {0}", e);
 		} catch (IllegalArgumentException e) {
@@ -112,6 +99,11 @@ public class TokenProvider {
 	}
 
 	private Claims extractAllClaims(String token) {
-		return Jwts.parser().requireSubject(secretKey).build().parseSignedClaims(token).getPayload();
+		return Jwts.parser().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getPayload();
+	}
+
+	private Key getSignInKey() {
+		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+		return Keys.hmacShaKeyFor(keyBytes);
 	}
 }

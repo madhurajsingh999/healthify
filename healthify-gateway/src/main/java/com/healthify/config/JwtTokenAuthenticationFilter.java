@@ -1,5 +1,8 @@
 package com.healthify.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -13,9 +16,10 @@ import org.springframework.web.server.WebFilterChain;
 
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Component
 public class JwtTokenAuthenticationFilter implements WebFilter {
-
+    private final Logger log = LoggerFactory.getLogger(getClass());
     public static final String HEADER_PREFIX = "Bearer ";
 
     @Autowired
@@ -32,11 +36,10 @@ public class JwtTokenAuthenticationFilter implements WebFilter {
     }
 
     private String resolveToken(ServerHttpRequest request) {
-        String bearerToken = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(HEADER_PREFIX)) {
-            return bearerToken.substring(7);
+        String token = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        if (StringUtils.hasText(token) && token.startsWith(HEADER_PREFIX)) {
+            return token.substring(7);
         }
         return null;
     }
-
 }

@@ -1,9 +1,14 @@
 package com.healthify.controller;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.healthify.config.JwtProvider;
+import com.healthify.config.JwtService;
+import com.healthify.config.UserPrinciple;
 import com.healthify.dto.JwtResponseDto;
 import com.healthify.dto.LoginDto;
 import com.healthify.dto.SignUpDto;
@@ -21,6 +26,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,7 +52,7 @@ public class AuthenticationController {
 	PasswordEncoder encoder;
 
 	@Autowired
-	JwtProvider jwtProvider;
+	JwtService jwtService;
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginRequest) {
@@ -54,8 +60,14 @@ public class AuthenticationController {
 		Authentication authentication = authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-
-		String jwt = jwtProvider.generateJwtToken(authentication);
+		UserPrinciple userObj = (UserPrinciple) authentication.getPrincipal();
+		String roles=userObj.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(", "));
+		Map<String,Object> claim=new HashMap<>();
+		claim.put("id",userObj.getId());
+		claim.put("username",userObj.getUsername());
+		claim.put("role",roles);
+		claim.put("email",userObj.getEmail());
+		String jwt = jwtService.generateToken(claim,userObj);
 		return ResponseEntity.ok(new JwtResponseDto(jwt));
 	}
 
