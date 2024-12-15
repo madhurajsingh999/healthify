@@ -1,48 +1,55 @@
 package com.healthify.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.NaturalId;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }),
-		@UniqueConstraint(columnNames = { "email" }) })
+@Table(name = "users")
 public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 
-	@NotBlank
-	@Size(min = 3, max = 50)
-	private String name;
-
-	@NotBlank
-	@Size(min = 3, max = 50)
+	@Column(name = "username", nullable = false, unique = true)
 	private String username;
 
-	@NaturalId
-	@NotBlank
-	@Size(max = 50)
-	@Email
-	private String email;
-
-	@NotBlank
-	@Size(min = 6, max = 100)
+	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Column(name = "is_account_non_expired")
-	private boolean isAccountNonExpired;
-	@Column(name = "is_account_non_locked")
-	private boolean isAccountNonLocked;
-	@Column(name = "is_credentials_non_expired")
-	private boolean isCredentialsNonExpired;
-	@Column(name = "enabled")
-	private boolean enabled;
+	@Column(name = "account_status", nullable = false)
+	private boolean accountStatus = true;
+
+	@Column(name = "signup_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime signupDate;
+
+	@Column(name = "last_login", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime lastLogin;
+
+	@Column(name = "email_verified", nullable = false)
+	private boolean emailVerified = false;
+
+	@Column(name = "two_factor_enabled", nullable = false)
+	private boolean twoFactorEnabled = false;
+
+	@Column(name = "failed_login_attempts", nullable = false)
+	private int failedLoginAttempts = 0;
+
+	@Column(name = "is_credentials_non_expired", nullable = false)
+	private boolean isCredentialsNonExpired = true;
+
+	@Column(name = "created_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime createdDate;
+
+	@Column(name = "updated_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime updatedDate;
+
+	@Column(name = "deleted_date")
+	private LocalDateTime deletedDate;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -51,18 +58,17 @@ public class User {
 	public User() {
 	}
 
-	public User(String name, String username, String email, String password) {
-		this.name = name;
+	public User(String username, String password) {
 		this.username = username;
-		this.email = email;
 		this.password = password;
 	}
+	// Getters and Setters
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -74,28 +80,92 @@ public class User {
 		this.username = username;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isAccountStatus() {
+		return accountStatus;
+	}
+
+	public void setAccountStatus(boolean accountStatus) {
+		this.accountStatus = accountStatus;
+	}
+
+	public LocalDateTime getSignupDate() {
+		return signupDate;
+	}
+
+	public void setSignupDate(LocalDateTime signupDate) {
+		this.signupDate = signupDate;
+	}
+
+	public LocalDateTime getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(LocalDateTime lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public boolean isEmailVerified() {
+		return emailVerified;
+	}
+
+	public void setEmailVerified(boolean emailVerified) {
+		this.emailVerified = emailVerified;
+	}
+
+	public boolean isTwoFactorEnabled() {
+		return twoFactorEnabled;
+	}
+
+	public void setTwoFactorEnabled(boolean twoFactorEnabled) {
+		this.twoFactorEnabled = twoFactorEnabled;
+	}
+
+	public int getFailedLoginAttempts() {
+		return failedLoginAttempts;
+	}
+
+	public void setFailedLoginAttempts(int failedLoginAttempts) {
+		this.failedLoginAttempts = failedLoginAttempts;
+	}
+
+	public boolean isCredentialsNonExpired() {
+		return isCredentialsNonExpired;
+	}
+
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		isCredentialsNonExpired = credentialsNonExpired;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public LocalDateTime getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(LocalDateTime updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public LocalDateTime getDeletedDate() {
+		return deletedDate;
+	}
+
+	public void setDeletedDate(LocalDateTime deletedDate) {
+		this.deletedDate = deletedDate;
 	}
 
 	public Set<Role> getRoles() {
@@ -105,37 +175,4 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-
-	public boolean isAccountNonExpired() {
-		return isAccountNonExpired;
-	}
-
-	public void setAccountNonExpired(boolean isAccountNonExpired) {
-		this.isAccountNonExpired = isAccountNonExpired;
-	}
-
-	public boolean isAccountNonLocked() {
-		return isAccountNonLocked;
-	}
-
-	public void setAccountNonLocked(boolean isAccountNonLocked) {
-		this.isAccountNonLocked = isAccountNonLocked;
-	}
-
-	public boolean isCredentialsNonExpired() {
-		return isCredentialsNonExpired;
-	}
-
-	public void setCredentialsNonExpired(boolean isCredentialsNonExpired) {
-		this.isCredentialsNonExpired = isCredentialsNonExpired;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
 }

@@ -1,0 +1,13 @@
+server:
+  port: 9094
+  servlet:
+    context-path: /challenge
+spring:
+  application:
+    name: healthify-challenge
+  config:
+    import: "optional:configserver:http://localhost:8888"
+    label: default
+  cloud:
+    discovery:
+      enabled: true

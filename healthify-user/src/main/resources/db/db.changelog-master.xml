@@ -6,9 +6,5 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <include file="/db/changelog/changes/create-user-changelog-1.xml"/>
-    <include file="/db/changelog/changes/create-roles-changelog-1.xml"/>
-    <include file="/db/changelog/changes/insert-roles-changelog-1.xml"/>
-    <include file="/db/changelog/changes/create-role-changelog-1.xml"/>
-    <include file="/db/changelog/changes/create-password-reset-token-changelog-1.xml"/>
+    <include file="/db/changelog/changes/create-employee-details-changelog-1.xml"/>
 </databaseChangeLog>
