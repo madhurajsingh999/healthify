@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="ANIL" id="create_user_details_table">
+        <createTable tableName="employee_details">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="date_of_birth" type="Date">
+                <constraints nullable="false" unique="true"/>
+            </column> 
+            <column name="gender" type="gender_enum">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="phone_number" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="status" type="status_enum">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employee_id" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="employee_type" type="employee_type_enum">
+                <constraints nullable="false" unique="true"/>
+            </column> 
+            <column name="joining_date" type="timestamptz">
+                <constraints nullable="false"/>
+            </column>
+            <column name="effective_date" type="timestamptz" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="termination_date" type="timestamptz" >
+                <constraints nullable="false"/>
+            </column> 
+            <column name="language_prefrence" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="timezone" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="created_date" type="timestamptz" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_date" type="timestamptz" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_date" type="timestamptz" >
+                <constraints nullable="false"/>
+            </column>  
+            <column name="profile_picture" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>            
+        </createTable>
+        <rollback>
+            <dropTable tableName="users"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

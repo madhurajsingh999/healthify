@@ -7,10 +7,10 @@
 		<artifactId>healthify-common</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>healthify-user</artifactId>
+	<artifactId>healthify-reward</artifactId>
 	<version>0.0.1</version>
-	<name>healthify-user</name>
-	<description>Common Module </description>
+	<name>healthify-reward </name>
+	<description>Reward or Campaign  Module </description>
 	<url/>
 	<licenses>
 		<license/>
@@ -46,7 +46,6 @@
 			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
 			<version>2.6.0</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>

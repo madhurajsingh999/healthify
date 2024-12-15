@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog-ext https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="11270503042524-1" author="ANIL">
+        <sql>
+            CREATE TYPE status_enum AS ENUM ('ACTIVE','INACTIVE','TERMINATED','DELETE');
+            CREATE TYPE gender_enum AS ENUM ('MALE','FEMALE','OTHER');
+            CREATE TYPE relationship_enum AS ENUM ('EMPLOYEE','SPOUSE','PARENT','PARENT_IN_LAW','CHILD');
+        </sql>
+    </changeSet>
+    <changeSet id="11270503042524-2" author="ANIL">
+        <sql>
+            CREATE TYPE employee_type_enum AS ENUM ('FULL_TIME','PART_TIME','CONTRACT','INTERN');
+        </sql>
+    </changeSet>
+</databaseChangeLog>
