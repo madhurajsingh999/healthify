@@ -15,9 +15,5 @@
     <property name="clobType" value="clob" dbms="h2, mssql"/>
     <property name="uuidType" value="uuid" dbms="h2, mssql"/>
 
-    <include file="/db/changelog/changes/create-user-changelog-1.xml"/>
-    <include file="/db/changelog/changes/create-roles-changelog-1.xml"/>
-    <include file="/db/changelog/changes/insert-roles-changelog-1.xml"/>
-    <include file="/db/changelog/changes/create-role-changelog-1.xml"/>
-    <include file="/db/changelog/changes/create-password-reset-token-changelog-1.xml"/>
+    <include file="/db/changelog/create-challenges-table-1.xml"/>
 </databaseChangeLog>

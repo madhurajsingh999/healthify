@@ -1,8 +1,12 @@
-package entity;
+package com.healthify.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import com.healthify.enumconverter.GenderConverter;
+import com.healthify.enumconverter.StatusConverter;
+import org.hibernate.annotations.ColumnTransformer;
 
 @Entity
 @Table(name = "employee_details")
@@ -21,8 +25,11 @@ public class EmployeeDetails {
     @Column(name = "date_of_birth", nullable = false, unique = true)
     private LocalDate dateOfBirth;
 
-    @Column(name = "gender", nullable = false, unique = true)
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    @ColumnTransformer(write = "?::gender_enum")
+    @Column(name = "gender", columnDefinition = "gender_enum")
+    @Convert(converter = GenderConverter.class)
+    private Gender gender;
 
     @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber;
@@ -30,8 +37,11 @@ public class EmployeeDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "status", nullable = false)
-    private boolean status = true;
+    @Enumerated(EnumType.STRING)
+    @ColumnTransformer(write = "?::status_enum")
+    @Column(name = "status", columnDefinition = "status_enum")
+    @Convert(converter = StatusConverter.class)
+    private Status status;
 
     @Column(name = "employee_id", nullable = false, unique = true)
     private String employeeId;
@@ -100,14 +110,6 @@ public class EmployeeDetails {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -122,14 +124,6 @@ public class EmployeeDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     public String getEmployeeId() {

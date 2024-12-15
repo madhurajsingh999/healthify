@@ -41,10 +41,10 @@ spring:
           - Path=/reward/**
           filters:
           - PreserveHostHeader
-        - id: healthify-user
-          uri: lb://healthify-user
+        - id: healthify-employee
+          uri: lb://healthify-employee
           predicates:
-          - Path=/user/**
+          - Path=/employee/**
           filters:
         - id: healthify-notification
           uri: lb://healthify-notification

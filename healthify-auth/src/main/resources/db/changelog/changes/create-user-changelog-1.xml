@@ -20,10 +20,10 @@
             <column name="account_status" type="BOOLEAN" defaultValue="true">
                 <constraints nullable="false"/>
             </column>
-            <column name="signup_date" type="timestamptz" defaultValueComputed="CURRENT_TIMESTAMP">
+            <column name="signup_date" type="DATETIME" defaultValueComputed="timezone('UTC', now())">
                 <constraints nullable="false"/>
             </column>
-            <column name="last_login" type="timestamptz" defaultValueComputed="CURRENT_TIMESTAMP">
+            <column name="last_login" type="DATETIME" defaultValueComputed="timezone('UTC', now())">
                 <constraints nullable="false"/>
             </column>
             <column name="email_verified" type="BOOLEAN" defaultValue="true">
@@ -32,19 +32,19 @@
             <column name="two_factor_enabled" type="BOOLEAN" defaultValue="true">
                 <constraints nullable="false"/>
             </column>
-            <column  name="failed_login_attempts" type="INT" defaultValue="true">
+            <column  name="failed_login_attempts" type="INT" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
             <column name="is_credentials_non_expired" type="BOOLEAN" defaultValue="true">
                 <constraints nullable="false"/>
             </column>
-            <column name="created_date" type="timestamptz" defaultValueComputed="CURRENT_TIMESTAMP">
+            <column name="created_date" type="DATETIME" defaultValueComputed="timezone('UTC', now())">
                 <constraints nullable="false"/>
             </column>
-            <column name="updated_date" type="timestamptz" defaultValueComputed="CURRENT_TIMESTAMP">
+            <column name="updated_date" type="DATETIME" defaultValueComputed="timezone('UTC', now())">
                 <constraints nullable="false"/>
             </column>
-            <column name="deleted_date" type="timestamptz" defaultValue="true">
+            <column name="deleted_date" type="DATETIME" defaultValueComputed="timezone('UTC', now())">
                 <constraints nullable="false"/>
             </column>
         </createTable>

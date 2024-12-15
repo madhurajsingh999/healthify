@@ -20,7 +20,7 @@
             <column name="date_of_birth" type="Date">
                 <constraints nullable="false" unique="true"/>
             </column> 
-            <column name="gender" type="VARCHAR(20)">
+            <column name="gender" type="gender_enum">
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="phone_number" type="VARCHAR(20)">
@@ -29,22 +29,22 @@
             <column name="email" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="status" type="BOOLEAN" defaultValue="true">
+            <column name="status" type="status_enum">
                 <constraints nullable="false"/>
             </column>
             <column name="employee_id" type="VARCHAR(20)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="employee_type" type="VARCHAR(255)">
+            <column name="employee_type" type="employee_type_enum">
                 <constraints nullable="false" unique="true"/>
             </column> 
-            <column name="joining_date" type="timestamptz" defaultValue="true">
+            <column name="joining_date" type="timestamptz">
                 <constraints nullable="false"/>
             </column>
-            <column name="effective_date" type="timestamptz" defaultValue="true">
+            <column name="effective_date" type="timestamptz" >
                 <constraints nullable="false"/>
             </column>
-            <column name="termination_date" type="timestamptz" defaultValue="true">
+            <column name="termination_date" type="timestamptz" >
                 <constraints nullable="false"/>
             </column> 
             <column name="language_prefrence" type="VARCHAR(20)">
@@ -53,13 +53,13 @@
             <column name="timezone" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="created_date" type="timestamptz" defaultValue="true">
+            <column name="created_date" type="timestamptz" >
                 <constraints nullable="false"/>
             </column>
-            <column name="updated_date" type="timestamptz" defaultValue="true">
+            <column name="updated_date" type="timestamptz" >
                 <constraints nullable="false"/>
             </column>
-            <column name="deleted_date" type="timestamptz" defaultValue="true">
+            <column name="deleted_date" type="timestamptz" >
                 <constraints nullable="false"/>
             </column>  
             <column name="profile_picture" type="VARCHAR(20)">

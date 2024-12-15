@@ -77,10 +77,6 @@ public class AuthenticationController {
 			return new ResponseEntity<String>("Fail -> Username is already taken!", HttpStatus.BAD_REQUEST);
 		}
 
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-			return new ResponseEntity<String>("Fail -> Email is already in use!", HttpStatus.BAD_REQUEST);
-		}
-
 		// Creating user's account
 		User user = new User(signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()));
 

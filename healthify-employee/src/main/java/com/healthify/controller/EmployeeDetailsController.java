@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.healthify.entity.EmployeeDetails;
 import com.healthify.reponse.UserDefinedResponse;
 import com.healthify.services.EmployeeDetailsService;
-
-import entity.EmployeeDetails;
 
 import java.util.List;
 

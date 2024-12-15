@@ -17,7 +17,6 @@ eureka:
     prefer-ip-address: true
 
 ---
-
 springdoc:
   api-docs:
     enabled: true
@@ -32,11 +31,10 @@ springdoc:
         url: /challenge/v3/api-docs
       - name: healthify-reward
         url: /reward/v3/api-docs
-      - name: healthify-user
-        url: /user/v3/api-docs
+      - name: healthify-employee
+        url: /employee/v3/api-docs
       - name: healthify-notification
         url: /notification/v3/api-docs
-
 
 jwt:
   secret: ${JWT_SECRET:R1BYcTVXVGNDU2JmWHVnZ1lnN0FKeGR3cU1RUU45QXV4SDJONFZ3ckhwS1N0ZjNCYVkzZ0F4RVBSS1UzRENwRw==}

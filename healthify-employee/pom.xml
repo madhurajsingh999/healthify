@@ -7,9 +7,9 @@
 		<artifactId>healthify-common</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>healthify-user</artifactId>
+	<artifactId>healthify-employee</artifactId>
 	<version>0.0.1</version>
-	<name>healthify-user</name>
+	<name>healthify-employee</name>
 	<description>Common Module </description>
 	<url/>
 	<licenses>

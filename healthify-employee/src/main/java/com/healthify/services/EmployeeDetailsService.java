@@ -3,9 +3,8 @@ package com.healthify.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.healthify.entity.EmployeeDetails;
 import com.healthify.repository.EmployeeDetailsRepository;
-
-import entity.EmployeeDetails;
 
 import java.util.List;
 import java.util.Optional;
