@@ -5,6 +5,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.ColumnTransformer;
+
+import com.healthify.enumconverter.StatusConverter;
+
 @Entity
 @Table(name = "challenges")
 public class Challenge {
@@ -26,8 +30,11 @@ public class Challenge {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "status", length = 50)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @ColumnTransformer(write = "?::status_enum")
+    @Column(name = "status", columnDefinition = "status_enum")
+    @Convert(converter = StatusConverter.class)
+    private Status status;
 
     @Column(name = "created_by", length = 50)
     private String createdBy;
@@ -40,9 +47,6 @@ public class Challenge {
 
     @Column(name = "last_updated_at")
     private LocalDateTime lastUpdatedAt;
-
-    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private List<Reward> rewards;
 
     // Getters and Setters
 
@@ -86,14 +90,6 @@ public class Challenge {
         this.endDate = endDate;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getCreatedBy() {
         return createdBy;
     }
@@ -126,11 +122,4 @@ public class Challenge {
         this.lastUpdatedAt = lastUpdatedAt;
     }
 
-    // public List<Reward> getRewards() {
-    // return rewards;
-    // }
-
-    // public void setRewards(List<Reward> rewards) {
-    // this.rewards = rewards;
-    // }
 }
