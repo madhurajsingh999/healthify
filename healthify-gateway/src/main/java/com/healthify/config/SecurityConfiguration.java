@@ -36,7 +36,7 @@ public class SecurityConfiguration {
             "/auth/v3/api-docs/**",
             "/auth/v1/signin","/auth/v1/signup",
             "/auth/actuator","/auth/actuator/**",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**","/"
     };
 	
 	
