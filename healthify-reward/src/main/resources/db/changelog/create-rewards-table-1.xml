@@ -7,10 +7,10 @@
 
     <changeSet id="create-rewards-table-1" author="healthify">
         <createTable tableName="rewards">
-            <column name="id" type="long">
+            <column name="id" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="challenge_id" type="long">
+            <column name="challenge_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column name="reward_name" type="VARCHAR(255)">
