@@ -39,7 +39,7 @@ public class ChallengesServiceImpl implements ChallengesService {
             existingChallenge.setChallengeDescription(challenge.getChallengeDescription());
             existingChallenge.setStartDate(challenge.getStartDate());
             existingChallenge.setEndDate(challenge.getEndDate());
-            existingChallenge.setStatus(challenge.getStatus());
+            //existingChallenge.Status.setStatus(challenge);
             existingChallenge.setLastUpdatedBy(challenge.getLastUpdatedBy());
             existingChallenge.setLastUpdatedAt(challenge.getLastUpdatedAt());
             return challengesRepository.save(existingChallenge);

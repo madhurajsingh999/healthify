@@ -1,5 +1,5 @@
 server:
-  port: 9094
+  port: 9084
   servlet:
     context-path: /challenge
 spring:
