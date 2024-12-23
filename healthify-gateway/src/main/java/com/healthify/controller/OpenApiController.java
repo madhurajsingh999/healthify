@@ -13,6 +13,6 @@ public class OpenApiController {
     @RequestMapping("/")
     public String openSwaggerUI() {
         log.info("DOC Controller");
-        return "redirect:/swagger-ui/index.html";
+        return "redirect:/webjars/swagger-ui/index.html";
     }
 }

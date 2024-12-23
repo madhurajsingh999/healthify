@@ -3,6 +3,15 @@ package com.healthify.dto;
 public class JwtResponseDto {
 	private String token;
 	private String type = "Bearer";
+	private String error;
+
+	public JwtResponseDto() {
+	}
+
+	public JwtResponseDto(String error, String accessToken) {
+		this.error = error;
+		this.token = accessToken;
+	}
 
 	public JwtResponseDto(String accessToken) {
 		this.token = accessToken;
@@ -22,5 +31,13 @@ public class JwtResponseDto {
 
 	public void setTokenType(String tokenType) {
 		this.type = tokenType;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 }
