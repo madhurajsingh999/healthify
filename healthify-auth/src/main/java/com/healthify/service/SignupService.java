@@ -63,7 +63,7 @@ Authentication authentication = authenticationProvider.authenticate(
 		return ResponseEntity.ok(new JwtResponseDto(jwt));
         }catch (Exception e){
             log.error("Error Occurred while signin for username={}",loginRequest.getUsername(), e);
-            return ResponseEntity.internalServerError().body(new JwtResponseDto(e.getMessage(),null));
+            throw new RuntimeException(e.getMessage(),e);
         }
     }
 
@@ -117,7 +117,7 @@ Authentication authentication = authenticationProvider.authenticate(
         return ResponseEntity.ok("User registered successfully!");
         }catch (Exception e){
             log.error("Error Occurred while saving user for username={}",signUpRequest.getUsername(), e);
-            return ResponseEntity.internalServerError().body(e.getMessage());
+            throw new RuntimeException(e.getMessage(),e);
         }
     }
 }
