@@ -110,13 +110,15 @@ Authentication authentication = authenticationProvider.authenticate(
 			}
 		});
 		user.setRoles(roles);
+		user.setTwoFactorEnabled(true);
+		user.setSignupDate(LocalDateTime.now());
+		user.setLastLogin(LocalDateTime.now());
 		user.setCredentialsNonExpired(true);
-        user.setSignupDate(LocalDateTime.now());
-        user.setLastLogin(LocalDateTime.now());
-        user.setAccountStatus(true);
-        user.setCreatedDate(LocalDateTime.now());
-        user.setUpdatedDate(LocalDateTime.now());
-        user.setAccountStatus(true);
+		user.setAccountStatus(true);
+		user.setCreatedDate(LocalDateTime.now());
+		user.setUpdatedDate(LocalDateTime.now());
+		user.setEmailVerified(true);
+		user.setFailedLoginAttempts(0);
 		userRepository.save(user);
         return ResponseEntity.ok("User registered successfully!");
         }catch (Exception e){
