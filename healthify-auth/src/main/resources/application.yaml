@@ -15,8 +15,9 @@ spring:
       max-lifetime: 120000
       maximum-pool-size: 3
       minimum-idle: 1
-      username: ${POSTGRES_USER:postgres}
-      password: ${POSTGRES_PASSWORD:nailbyter11}
+      username: postgres
+      password: Wellness36@
+
   liquibase:
     change-log: "classpath:/db/db.changelog-master.xml"
   config:

@@ -22,21 +22,23 @@ public class UserPrinciple implements UserDetails {
     @JsonIgnore
     private String password;
 
+    private boolean accountStatus;
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserPrinciple(long id, String username, String password,
-            Collection<? extends GrantedAuthority> authorities) {
+            Collection<? extends GrantedAuthority> authorities, boolean accountStatus) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
+        this.accountStatus = accountStatus;
     }
 
     public static UserPrinciple build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
 
-        return new UserPrinciple(user.getId(), user.getUsername(), user.getPassword(), authorities);
+        return new UserPrinciple(user.getId(), user.getUsername(), user.getPassword(), authorities,user.isAccountStatus());
     }
 
     public long getId() {
@@ -75,7 +77,7 @@ public class UserPrinciple implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.accountStatus;
     }
 
     @Override

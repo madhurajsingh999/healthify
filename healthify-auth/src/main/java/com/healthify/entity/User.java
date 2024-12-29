@@ -48,7 +48,7 @@ public class User {
 	@Column(name = "updated_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime updatedDate;
 
-	@Column(name = "deleted_date")
+	@Column(name = "deleted_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime deletedDate;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -97,7 +97,10 @@ public class User {
 	}
 
 	public LocalDateTime getSignupDate() {
-		return signupDate;
+		if(this.signupDate == null){
+			this.signupDate = LocalDateTime.now();
+		}
+		return this.signupDate;
 	}
 
 	public void setSignupDate(LocalDateTime signupDate) {
@@ -157,6 +160,9 @@ public class User {
 	}
 
 	public void setUpdatedDate(LocalDateTime updatedDate) {
+		if(this.updatedDate == null){
+			this.updatedDate = LocalDateTime.now();
+		}
 		this.updatedDate = updatedDate;
 	}
 

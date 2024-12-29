@@ -10,19 +10,7 @@ import java.time.LocalDateTime;
 import com.healthify.config.JwtProvider;
 import com.healthify.config.JwtService;
 import com.healthify.config.UserPrinciple;
-import com.healthify.dto.JwtResponseDto;
-import com.healthify.dto.LoginDto;
-import com.healthify.dto.SignUpDto;
-import com.healthify.entity.Role;
-import com.healthify.entity.RoleName;
-import com.healthify.entity.User;
-import com.healthify.repository.RoleRepository;
-import com.healthify.repository.UserRepository;
-import jakarta.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,10 +18,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -41,36 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
 	@Autowired
-	AuthenticationProvider authenticationProvider;
-
-	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	RoleRepository roleRepository;
-
-	@Autowired
-	PasswordEncoder encoder;
-
-	@Autowired
-	JwtService jwtService;
+	private SignupService signupService;
 
 	@PostMapping("/signin")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginRequest) {
-
-		Authentication authentication = authenticationProvider.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		UserPrinciple userObj = (UserPrinciple) authentication.getPrincipal();
-		String roles = userObj.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-				.collect(Collectors.joining(", "));
-		Map<String, Object> claim = new HashMap<>();
-		claim.put("id", userObj.getId());
-		claim.put("username", userObj.getUsername());
-		claim.put("role", roles);
-		String jwt = jwtService.generateToken(claim, userObj);
-		return ResponseEntity.ok(new JwtResponseDto(jwt));
+	public ResponseEntity<JwtResponseDto> authenticateUser(@Valid @RequestBody LoginDto loginRequest) {
+		return signupService.signin(loginRequest);
 	}
 
 	@PostMapping("/signup")
