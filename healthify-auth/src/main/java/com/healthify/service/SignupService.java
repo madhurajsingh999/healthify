@@ -24,8 +24,8 @@ import com.healthify.dto.JwtResponseDto;
 import com.healthify.dto.LoginDto;
 import com.healthify.dto.SignUpDto;
 import com.healthify.entity.Role;
-import com.healthify.entity.RoleName;
 import com.healthify.entity.User;
+import com.healthify.enums.RoleName;
 import com.healthify.repository.RoleRepository;
 import com.healthify.repository.UserRepository;
 
@@ -60,7 +60,11 @@ Authentication authentication = authenticationProvider.authenticate(
 		claim.put("username", userObj.getUsername());
 		claim.put("role", roles);
 		String jwt = jwtService.generateToken(claim, userObj);
-		return ResponseEntity.ok(new JwtResponseDto(jwt));
+		JwtResponseDto jwtObj=JwtResponseDto.builder()
+		.id(userObj.getId()).roles(roles).type("Bearer")
+		.email(userObj.getEmail()).firstName(userObj.getFirstName()).lastName(userObj.getLastName())
+		.token(jwt).build();
+		return ResponseEntity.ok(jwtObj);
         }catch (Exception e){
             log.error("Error Occurred while signin for username={}",loginRequest.getUsername(), e);
             throw new RuntimeException(e.getMessage(),e);

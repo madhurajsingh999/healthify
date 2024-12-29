@@ -5,7 +5,7 @@ spring:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:healthifydb}?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
     driver-class-name: org.postgresql.Driver
     username: ${POSTGRES_USERNAME:postgres}
-    password: ${POSTGRES_PASSWORD:nailbyter11}
+    password: ${POSTGRES_PASSWORD:Wellness36@}
     hikari:
       auto-commit: true
       connection-timeout: 20000

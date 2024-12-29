@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
+import com.healthify.enums.RoleName;
+
 @Entity
 @Setter
 @Getter

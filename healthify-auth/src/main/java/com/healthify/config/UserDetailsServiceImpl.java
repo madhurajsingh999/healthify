@@ -1,7 +1,13 @@
 package com.healthify.config;
 
-import com.healthify.entity.User;
+import com.healthify.dto.UserInfo;
+import com.healthify.dto.UserRoleInfo;
+import com.healthify.repository.RoleRepository;
 import com.healthify.repository.UserRepository;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,17 +19,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(
-                        () -> new UsernameNotFoundException("User Not Found with -> username or email : " + username));
-
-        return UserPrinciple.build(user);
+        Optional<UserInfo> userOpt = userRepository.findByUsername(username);
+        if(userOpt.isEmpty()) {
+            throw new UsernameNotFoundException("User Not Found with username: " + username);
+        }
+        UserInfo user = userOpt.get();
+        List<UserRoleInfo> roles=roleRepository.findRoleByUserId(user.getId());
+        return UserPrinciple.build(user,roles);
     }
 }

@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import com.healthify.entity.User;
+import com.healthify.dto.UserInfo;
+import com.healthify.dto.UserRoleInfo;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,9 @@ public class UserPrinciple implements UserDetails {
     private long id;
 
     private String username;
+    private String email;
+    private String firstName;
+    private String lastName;
 
     @JsonIgnore
     private String password;
@@ -34,11 +39,15 @@ public class UserPrinciple implements UserDetails {
         this.accountStatus = accountStatus;
     }
 
-    public static UserPrinciple build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
+    public static UserPrinciple build(UserInfo user,List<UserRoleInfo> roles) {
+        List<GrantedAuthority> authorities = roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
 
-        return new UserPrinciple(user.getId(), user.getUsername(), user.getPassword(), authorities,user.isAccountStatus());
+                UserPrinciple userObj= new UserPrinciple(user.getId(), user.getUsername(), user.getPassword(), authorities,user.getAccountstatusu());
+                userObj.setEmail(user.getEmail());
+                userObj.setFirstName(user.getFirstname());
+                userObj.setLastName(user.getLastname());
+                return userObj;
     }
 
     public long getId() {
@@ -89,5 +98,29 @@ public class UserPrinciple implements UserDetails {
 
         UserPrinciple user = (UserPrinciple) o;
         return Objects.equals(id, user.id);
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

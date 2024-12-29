@@ -52,4 +52,14 @@
             <dropTable tableName="users"/>
         </rollback>
     </changeSet>
+    <changeSet author="ANIL" id="add_employee_detail_id_column">
+        <addColumn tableName="users">
+            <column name="employee_detail_id" type="INT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="users" columnName="employee_detail_id"/>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>
