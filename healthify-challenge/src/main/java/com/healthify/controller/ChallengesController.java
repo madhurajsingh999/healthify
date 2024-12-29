@@ -2,12 +2,18 @@ package com.healthify.controller;
 
 import com.healthify.entity.Challenge;
 import com.healthify.service.ChallengesService;
+import com.healthify.service.KafkaProducerService;
+
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/challenges")
 public class ChallengesController {
@@ -21,6 +27,15 @@ public class ChallengesController {
     @GetMapping
     public ResponseEntity<List<Challenge>> getAllChallenges() {
         return ResponseEntity.ok(challengesService.getAllChallenges());
+    }
+
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
+
+    @PostMapping("/send")
+    public void sendMessage(@RequestBody String message) {
+        log.info(message);
+        kafkaProducerService.sendMessage(message);
     }
 
     @GetMapping("/{id}")

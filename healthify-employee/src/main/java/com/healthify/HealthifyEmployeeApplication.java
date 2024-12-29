@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-public class HealthifyUserApplication {
+public class HealthifyEmployeeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HealthifyUserApplication.class, args);
+		SpringApplication.run(HealthifyEmployeeApplication.class, args);
 	}
 
 }
