@@ -46,11 +46,11 @@ public class JwtService {
         return jwtExpiration;
     }
 
+    @SuppressWarnings("deprecation")
     private String buildToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails,
-            long expiration
-    ) {
+            long expiration) {
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
@@ -73,6 +73,7 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
+    @SuppressWarnings("deprecation")
     private Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getBody();
     }
@@ -82,6 +83,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    @SuppressWarnings("deprecation")
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(getSignInKey()).build().parseClaimsJws(authToken);

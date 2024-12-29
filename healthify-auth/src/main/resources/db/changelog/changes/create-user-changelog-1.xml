@@ -45,7 +45,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="deleted_date" type="DATETIME" defaultValueComputed="timezone('UTC', now())">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
         <rollback>

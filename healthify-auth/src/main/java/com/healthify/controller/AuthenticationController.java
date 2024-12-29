@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
 
 import com.healthify.config.JwtProvider;
 import com.healthify.config.JwtService;
@@ -28,12 +29,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1")
 public class AuthenticationController {
@@ -85,7 +87,7 @@ public class AuthenticationController {
 
 		strRoles.forEach(role -> {
 			switch (role) {
-				case "superdmin":
+				case "superadmin":
 					Role adminRole = roleRepository.findByName(RoleName.ROLE_SUPER_ADMIN)
 							.orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
 					roles.add(adminRole);
@@ -110,9 +112,15 @@ public class AuthenticationController {
 			}
 		});
 		user.setRoles(roles);
-		// user.setAccountNonExpired(true);
-		// user.setAccountNonLocked(true);
+		user.setTwoFactorEnabled(true);
+		user.setSignupDate(LocalDateTime.now());
+		user.setLastLogin(LocalDateTime.now());
 		user.setCredentialsNonExpired(true);
+		user.setAccountStatus(true);
+		user.setCreatedDate(LocalDateTime.now());
+		user.setUpdatedDate(LocalDateTime.now());
+		user.setEmailVerified(true);
+		user.setFailedLoginAttempts(0);
 		userRepository.save(user);
 
 		return ResponseEntity.ok().body("User registered successfully!");

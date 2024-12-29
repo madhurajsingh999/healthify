@@ -1,18 +1,33 @@
 package com.healthify.controller;
 
 import com.healthify.entity.Reward;
+import com.healthify.service.KafkaProducerService;
 import com.healthify.service.RewardsService;
+
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/rewards")
 public class RewardsController {
 
     private final RewardsService rewardsService;
+
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
+
+    @PostMapping("/send")
+    public void sendMessage(@RequestBody String message) {
+        log.info(message);
+        kafkaProducerService.sendMessage(message);
+    }
 
     public RewardsController(RewardsService rewardsService) {
         this.rewardsService = rewardsService;
