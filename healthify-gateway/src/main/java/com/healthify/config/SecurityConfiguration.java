@@ -35,7 +35,7 @@ public class SecurityConfiguration {
             "/challenge/v3/api-docs/**",
             "/reward/v3/api-docs/**",
             "/notification/v3/api-docs/**",
-            "/user/v3/api-docs/**",
+            "/employee/v3/api-docs/**",
             "/auth/v3/api-docs/**",
             "/auth/v1/signin","/auth/v1/signup",
             "/auth/actuator","/auth/actuator/**",
