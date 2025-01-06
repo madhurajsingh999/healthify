@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /reward
 spring:
+  profiles:
+    active: local
   application:
     name: healthify-reward
   config:

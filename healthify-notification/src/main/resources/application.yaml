@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /notification
 spring:
+  profiles:
+    active: local
   application:
     name: healthify-notification
   config:

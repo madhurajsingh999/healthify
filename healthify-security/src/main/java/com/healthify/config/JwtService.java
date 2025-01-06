@@ -86,6 +86,7 @@ public class JwtService {
     @SuppressWarnings("deprecation")
     public boolean validateJwtToken(String authToken) {
         try {
+            logger.info("Validating JWT token={}",secretKey);
             Jwts.parser().setSigningKey(getSignInKey()).build().parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
