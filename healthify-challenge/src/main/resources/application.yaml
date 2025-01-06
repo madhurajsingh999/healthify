@@ -1,5 +1,5 @@
 server:
-  port: 9094
+  port: 9084
   servlet:
     context-path: /challenge
 spring:
@@ -11,3 +11,15 @@ spring:
   cloud:
     discovery:
       enabled: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: challenge-group
+      auto-offset-reset: earliest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+eureka:
+  instance:
+    prefer-ip-address: true

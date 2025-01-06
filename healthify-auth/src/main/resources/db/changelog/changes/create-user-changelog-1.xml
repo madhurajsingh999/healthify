@@ -24,7 +24,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="last_login" type="DATETIME" defaultValueComputed="timezone('UTC', now())">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="email_verified" type="BOOLEAN" defaultValue="true">
                 <constraints nullable="false"/>
@@ -45,11 +45,21 @@
                 <constraints nullable="false"/>
             </column>
             <column name="deleted_date" type="DATETIME" defaultValueComputed="timezone('UTC', now())">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
         <rollback>
             <dropTable tableName="users"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="ANIL" id="add_employee_detail_id_column">
+        <addColumn tableName="users">
+            <column name="employee_detail_id" type="INT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="users" columnName="employee_detail_id"/>
         </rollback>
     </changeSet>
 </databaseChangeLog>

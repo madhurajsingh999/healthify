@@ -1,10 +1,7 @@
-/*package com.healthify.config;
+package com.healthify.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsWebFilter;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.lang.NonNull;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
@@ -14,19 +11,10 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 public class CORSFilter implements WebFluxConfigurer {
 
 	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowCredentials(true).allowedOrigins("*").allowedHeaders("*").allowedMethods("*");
+	public void addCorsMappings(@NonNull CorsRegistry registry) {
+		registry.addMapping("/**")
+		.allowedOrigins("*")
+		.allowedHeaders("*")
+		.allowedMethods("*");
 	}
-
-	@Bean
-	public CorsWebFilter corsWebFilter() {
-		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowCredentials(false);
-		corsConfiguration.addAllowedHeader("*");
-		corsConfiguration.addAllowedMethod("*");
-		corsConfiguration.addAllowedOrigin("http://localhost8080");
-		UrlBasedCorsConfigurationSource corsConfigurationSource = new UrlBasedCorsConfigurationSource();
-		corsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
-		return new CorsWebFilter(corsConfigurationSource);
-	}
-}*/
+}

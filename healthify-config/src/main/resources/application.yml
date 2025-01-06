@@ -10,7 +10,7 @@ spring:
     config:
       server:
         native:
-          searchLocations: file:C:/Users/Admin/OneDrive/Documents/Healthify/healthify/healthify-ms-config
+          searchLocations: C:/Users/Admin/OneDrive/Documents/Healthify/healthify/healthify-ms-config
 eureka:
   client:
     serviceUrl:

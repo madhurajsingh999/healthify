@@ -27,7 +27,7 @@ public class WebSecurityConfig {
             "/swagger-resources/**",
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/swagger-ui",
+            "/swagger-ui","/logout"
     };
 
     @Autowired
