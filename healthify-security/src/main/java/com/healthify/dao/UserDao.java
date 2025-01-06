@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.healthify.dto.UserInfo;
 import com.healthify.dto.UserRoleInfo;
+import com.healthify.mapper.UserRoleInfoRowMapper;
 import com.healthify.mapper.UserRowMapper;
 
 @Repository

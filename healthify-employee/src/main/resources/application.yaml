@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /employee
 spring:
+  profiles:
+    active: local
   application:
     name: healthify-employee
   config:
