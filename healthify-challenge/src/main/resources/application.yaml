@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /challenge
 spring:
+  profiles:
+    active: local
   application:
     name: healthify-challenge
   config:

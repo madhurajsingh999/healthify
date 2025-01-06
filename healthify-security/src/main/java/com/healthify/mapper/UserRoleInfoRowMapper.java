@@ -1,4 +1,4 @@
-package com.healthify.dao;
+package com.healthify.mapper;
 
 import com.healthify.dto.UserRoleInfo;
 import org.springframework.jdbc.core.RowMapper;
