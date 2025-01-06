@@ -9,7 +9,7 @@ const apiWithTags = healthfyApi.enhanceEndpoints({ addTagTypes: ['UserLogin'] })
 
 const userLoginApi = apiWithTags.injectEndpoints({
   endpoints: builder => ({
-    login: builder.mutation<LoginResponse,{ payload: { loginPayload: LoginRequest; currentDate: Date } }>({
+    login: builder.mutation<LoginResponse, { payload: { loginPayload: LoginRequest; currentDate: Date } }>({
       query: ({ payload }) => ({
         url: ENDPOINTS.LOGIN_ENDPOINT,
         method: 'POST',
@@ -61,7 +61,7 @@ const userLoginApi = apiWithTags.injectEndpoints({
 });
 
 export const {
-  useLogoutMutation,useLoginMutation
+  useLogoutMutation, useLoginMutation
 } = userLoginApi;
 
 export default userLoginApi;

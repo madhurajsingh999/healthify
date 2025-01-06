@@ -16,7 +16,7 @@ spring:
       maximum-pool-size: 3
       minimum-idle: 1
       username: postgres
-      password: Wellness36@
+      password: nailbyter11
 
   liquibase:
     change-log: "classpath:/db/db.changelog-master.xml"
