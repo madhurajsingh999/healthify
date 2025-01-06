@@ -1,25 +1,48 @@
-import React from 'react';
+import React, { use, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useSignupUserInfoMutation } from '../../services/register';
+import { RegisterRequest } from '../../models/login';
 
 // Define the validation schema using yup
 const schema = yup.object().shape({
-  name: yup.string().required('Name is required'),
-  username: yup.string().required('Username is required'),
+  firstName: yup.string().required('Name is required'),
+  lastName: yup.string().required('Username is required'),
   email: yup.string().email('Invalid email format').required('Email is required'),
   password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
   confirmPassword: yup.string()
     .oneOf([yup.ref('password')], 'Passwords must match')
     .required('Confirm Password is required'),
-});
+  gender: yup.string().required('Name is required'),
+  dateOfBirth: yup.string().required('Name is required'),
+  phoneNumber: yup.string(),
+},);
 
 const Register = () => {
+  const [signupUserInfo, { data, isLoading, isError, isSuccess, error }] = useSignupUserInfoMutation();
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => { // Handle the signup response here
+
+    if (!isLoading) {
+      console.log('Signing up...');
+      if (data && isSuccess) {
+        console.log('Signup successful:', data);
+      }
+      if (isError) {
+        console.error('Signup failed:', error);
+      }
+    }
+
+  }, [data, isError, error]);
+
   const onSubmit = (data: any) => {
+
+    const payload: RegisterRequest = { firstName: data.firstName, lastName: data.lastName, email: data.email, password: data.password, gender: data.gender, dateOfBirth: data.dateOfBirth, phoneNumber: data.phoneNumber };
+    signupUserInfo({ payload });
     console.log(data);
     // Handle signup logic here
   };
@@ -34,35 +57,35 @@ const Register = () => {
         <h3 className="mb-3">Signup</h3>
         <div className="mb-3">
           <Controller
-            name="name"
+            name="firstName"
             control={control}
             defaultValue=""
             render={({ field }) => (
               <input
                 {...field}
                 type="text"
-                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
                 placeholder="Name"
               />
             )}
           />
-          {errors.name && <div className="invalid-feedback">{errors.name.message}</div>}
+          {errors.firstName && <div className="invalid-feedback">{errors.firstName.message}</div>}
         </div>
         <div className="mb-3">
           <Controller
-            name="username"
+            name="lastName"
             control={control}
             defaultValue=""
             render={({ field }) => (
               <input
                 {...field}
                 type="text"
-                className={`form-control ${errors.username ? 'is-invalid' : ''}`}
-                placeholder="Username"
+                className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                placeholder="Last Name"
               />
             )}
           />
-          {errors.username && <div className="invalid-feedback">{errors.username.message}</div>}
+          {errors.lastName && <div className="invalid-feedback">{errors.lastName.message}</div>}
         </div>
         <div className="mb-3">
           <Controller
@@ -111,6 +134,54 @@ const Register = () => {
             )}
           />
           {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword.message}</div>}
+        </div>
+        <div className="mb-3">
+          <Controller
+            name="gender"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <input
+                {...field}
+                type="select"
+                className={`form-control ${errors.gender ? 'is-invalid' : ''}`}
+                placeholder="Gender"
+              />
+            )}
+          />
+          {errors.gender && <div className="invalid-feedback">{errors.gender.message}</div>}
+        </div>
+        <div className="mb-3">
+          <Controller
+            name="dateOfBirth"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <input
+                {...field}
+                type="text"
+                className={`form-control ${errors.dateOfBirth ? 'is-invalid' : ''}`}
+                placeholder="Date Of Birth"
+              />
+            )}
+          />
+          {errors.dateOfBirth && <div className="invalid-feedback">{errors.dateOfBirth.message}</div>}
+        </div>
+        <div className="mb-3">
+          <Controller
+            name="phoneNumber"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <input
+                {...field}
+                type="text"
+                className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
+                placeholder="Phone NUmber"
+              />
+            )}
+          />
+          {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber.message}</div>}
         </div>
         <button type="submit" className="btn btn-primary w-100">Signup</button>
       </form>

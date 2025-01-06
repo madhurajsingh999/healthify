@@ -32,6 +32,7 @@ public class AuthenticationController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpDto signUpRequest) {
+		log.info("User Register triggered!!");
 		return signupService.saveUser(signUpRequest);
 	}
 
